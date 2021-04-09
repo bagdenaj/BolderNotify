@@ -2,7 +2,6 @@
 # Alerts you when a webpage has changed it's content by comparing checksums of the html.
 
 import hashlib
-from urllib.request import urlopen, Request
 import random
 import time
 from twilio.rest import Client
@@ -10,8 +9,8 @@ import requests
 
 # Your Account Sid and Auth Token from twilio.com/console
 # and set the environment variables. See http://twil.io/secure
-account_sid = 'AC8c43dcb7c3476ff212bd92de120ae6ae'
-auth_token = 'fdfd9eb1be27efd6e51422497f49b5ff'
+account_sid = 'ACCOUNT_SID'
+auth_token = 'TOKEN'
 client = Client(account_sid, auth_token)
 
 # time between checks in seconds
@@ -36,9 +35,6 @@ def getHash():
         'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.151 Safari/535.19'
     ]
 
-    # url to be scraped
-    #url = Request("https://www.südbloc.de", headers={'User-Agent': user_agents[randomint]})
-
     response = requests.get("https://www.südbloc.de", headers={'User-Agent': user_agents[randomint]})
     the_page = response.content
 
@@ -52,6 +48,6 @@ while 1: # Run forever
         print("Not Changed")
     else: # If something has changed
         print("Changed")
-        client.api.account.messages.create(to="+4917671227950",from_="+12542390909",body="Jetzt kannst du dich anmelden!")
+        client.api.account.messages.create(to="+123456789",from_="+123456789",body="Jetzt kannst du dich anmelden!")
         break
     time.sleep(sleeptime-ranint)
