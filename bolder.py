@@ -6,6 +6,7 @@ from urllib.request import urlopen, Request
 import random
 import time
 from twilio.rest import Client
+import requests
 
 # Your Account Sid and Auth Token from twilio.com/console
 # and set the environment variables. See http://twil.io/secure
@@ -36,20 +37,21 @@ def getHash():
     ]
 
     # url to be scraped
-    url = Request("http://raw.adventuresintechland.com/freedom.html", headers={'User-Agent': user_agents[randomint]})
+    #url = Request("https://www.südbloc.de", headers={'User-Agent': user_agents[randomint]})
 
-    response = urlopen(url)
-    the_page = response.read()
+    response = requests.get("https://www.südbloc.de", headers={'User-Agent': user_agents[randomint]})
+    the_page = response.content
 
     return hashlib.sha224(the_page).hexdigest()
 
 current_hash = getHash() # Get the current hash, which is what the website is now
 
 while 1: # Run forever
+    ranint = random.randint(0,7)
     if getHash() == current_hash: # If nothing has changed
         print("Not Changed")
     else: # If something has changed
         print("Changed")
-        client.api.account.messages.create(to="+4917671227950",from_="+4917671227950",body="Jetzt kannst du dich anmelden!")
+        client.api.account.messages.create(to="+4917671227950",from_="+12542390909",body="Jetzt kannst du dich anmelden!")
         break
-    time.sleep(sleeptime)
+    time.sleep(sleeptime-ranint)
